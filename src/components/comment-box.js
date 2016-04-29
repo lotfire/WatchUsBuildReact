@@ -14,6 +14,18 @@ export default class CommentBox extends React.Component {
       showComments: false,
       comments: []
     };
+    {/*
+      every time setState is called, the render function gets called again,
+      so every time a prop uses a functionName.bind(this) it makes a new reference
+      to functionName in the memory every time render is called,
+      so we're depending on the garbage collector to get rid of the objects.
+
+      Binding at the constructor level will enable to create only one memory reference to the objects
+      and recreating at each render()
+
+    */}
+    this._deleteComment = this._deleteComment.bind(this);{/* binding to CommentBox*/}
+    this._addComment = this._addComment.bind(this);
   }
 
   componentWillMount() {
@@ -27,7 +39,7 @@ export default class CommentBox extends React.Component {
         <div className="cell">
           <h2>Join The Discussion</h2>
           <div className="comment-box">
-            <CommentForm addComment={this._addComment.bind(this)} />
+            <CommentForm addComment={this._addComment} />
             <CommentAvatarList avatars={this._getAvatars()} />
 
             {this._getPopularMessage(comments.length)}
@@ -58,11 +70,12 @@ export default class CommentBox extends React.Component {
   _getComments() {
     return this.state.comments.map((comment) => {
       return <Comment
-               id={comment.id}
-               author={comment.author}
-               body={comment.body}
-               avatarUrl={comment.avatarUrl}
-               onDelete={this._deleteComment.bind(this)}
+              {...comment /*spread operator to get all the properties from comment*/}
+               onDelete={ this._deleteComment /*most performant way is to bind to this CommentBox context in the constructor above*/
+                 /* (commentID) => this._deleteComment(commentID)
+                    we invoke _deleteComment directly in an arrow function
+                    that binds directly to this CommentBox context instead
+                    instead of using .bind(this) method on it*/}
                key={comment.id} />
     });
   }
