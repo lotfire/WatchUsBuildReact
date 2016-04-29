@@ -1,6 +1,9 @@
 import React from 'react';
 import jQuery from 'jquery';
 
+import CommentForm from './comment-form';
+import CommentAvatarList from './comment-avatar-list';
+
 export default class CommentBox extends React.Component {
 
   constructor() {
@@ -107,161 +110,161 @@ export default class CommentBox extends React.Component {
   }
 }
 
-class CommentForm extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      characters: 0
-    };
-  }
+// class CommentForm extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       characters: 0
+//     };
+//   }
+//
+//   render() {
+//     return (
+//       <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
+//         <label>New comment</label>
+//         <div className="comment-form-fields">
+//           <input placeholder="Name:" ref={c => this._author = c} />
+//           <textarea placeholder="Comment:" ref={c => this._body = c} onChange={this._getCharacterCount.bind(this)}></textarea>
+//         </div>
+//         <p>{this.state.characters} characters</p>
+//         <div className="comment-form-actions">
+//           <button type="submit">
+//             Post comment
+//           </button>
+//         </div>
+//       </form>
+//     );
+//   }
+//
+//   _getCharacterCount() {
+//
+//     this.setState({
+//       characters: this._body.value.length
+//     });
+//
+//   }
+//
+//   _handleSubmit(event) {
+//     event.preventDefault();
+//
+//     this.props.addComment(this._author.value, this._body.value);
+//
+//     this._author.value = '';
+//     this._body.value = '';
+//
+//     this.setState({ characters: 0  });
+//   }
+// }
 
-  render() {
-    return (
-      <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
-        <label>New comment</label>
-        <div className="comment-form-fields">
-          <input placeholder="Name:" ref={c => this._author = c} />
-          <textarea placeholder="Comment:" ref={c => this._body = c} onChange={this._getCharacterCount.bind(this)}></textarea>
-        </div>
-        <p>{this.state.characters} characters</p>
-        <div className="comment-form-actions">
-          <button type="submit">
-            Post comment
-          </button>
-        </div>
-      </form>
-    );
-  }
+// class CommentAvatarList extends React.Component {
+//   render() {
+//
+//     const { avatars = [] } = this.props;
+//
+//     return (
+//       <div className="comment-avatars">
+//         <h4>Authors</h4>
+//         <ul>
+//           {avatars.map((avatarUrl, i) => (
+//             <li key={i}>
+//               <img src={avatarUrl} />
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+//     )
+//   }
+// }
 
-  _getCharacterCount() {
+// class Comment extends React.Component {
+//   constructor() {
+//     super();
+//
+//     this.state = {
+//       isAbusive: false
+//     };
+//   }
+//
+//   render() {
+//
+//     let commentBody;
+//
+//     if (!this.state.isAbusive) {
+//       commentBody = this.props.body;
+//     } else {
+//       commentBody = <em>Content marked as abusive</em>;
+//     }
+//
+//     return(
+//       <div className="comment">
+//
+//         <img src={this.props.avatarUrl} alt={`${this.props.author}'s picture`} />
+//
+//         <p className="comment-header">{this.props.author}</p>
+//         <p className="comment-body">{commentBody}</p>
+//
+//         <div className="comment-actions">
+//           <CommentRemoveConfirmation onDelete={this._handleDelete.bind(this)} />
+//           <a href="#" onClick={this._toggleAbuse.bind(this)}>Report as Abuse</a>
+//         </div>
+//       </div>
+//     );
+//   }
+//
+//   _toggleAbuse(event) {
+//     event.preventDefault();
+//
+//     this.setState({
+//       isAbusive: !this.state.isAbusive
+//     });
+//   }
+//
+//   _handleDelete() {
+//     this.props.onDelete(this.props.id);
+//   }
+// }
 
-    this.setState({
-      characters: this._body.value.length
-    });
-
-  }
-
-  _handleSubmit(event) {
-    event.preventDefault();
-
-    this.props.addComment(this._author.value, this._body.value);
-
-    this._author.value = '';
-    this._body.value = '';
-
-    this.setState({ characters: 0  });
-  }
-}
-
-class CommentAvatarList extends React.Component {
-  render() {
-
-    const { avatars = [] } = this.props;
-
-    return (
-      <div className="comment-avatars">
-        <h4>Authors</h4>
-        <ul>
-          {avatars.map((avatarUrl, i) => (
-            <li key={i}>
-              <img src={avatarUrl} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-}
-
-class Comment extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isAbusive: false
-    };
-  }
-
-  render() {
-
-    let commentBody;
-
-    if (!this.state.isAbusive) {
-      commentBody = this.props.body;
-    } else {
-      commentBody = <em>Content marked as abusive</em>;
-    }
-
-    return(
-      <div className="comment">
-
-        <img src={this.props.avatarUrl} alt={`${this.props.author}'s picture`} />
-
-        <p className="comment-header">{this.props.author}</p>
-        <p className="comment-body">{commentBody}</p>
-
-        <div className="comment-actions">
-          <CommentRemoveConfirmation onDelete={this._handleDelete.bind(this)} />
-          <a href="#" onClick={this._toggleAbuse.bind(this)}>Report as Abuse</a>
-        </div>
-      </div>
-    );
-  }
-
-  _toggleAbuse(event) {
-    event.preventDefault();
-
-    this.setState({
-      isAbusive: !this.state.isAbusive
-    });
-  }
-
-  _handleDelete() {
-    this.props.onDelete(this.props.id);
-  }
-}
-
-class CommentRemoveConfirmation extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      showConfirm: false
-    };
-  }
-
-  render() {
-
-    let confirmNode;
-
-    if (this.state.showConfirm) {
-      return (
-        <span>
-          <a href="" onClick={this._confirmDelete.bind(this)}>Yes </a> - or - <a href="" onClick={this._toggleConfirmMessage.bind(this)}> No</a>
-        </span>
-      );
-    } else {
-      confirmNode = <a href="" onClick={this._toggleConfirmMessage.bind(this)}>Delete comment?</a>;
-    }
-
-    return (
-      <span>
-        {confirmNode}
-      </span>
-    );
-  }
-
-  _toggleConfirmMessage(e) {
-    e.preventDefault();
-
-    this.setState({
-      showConfirm: !this.state.showConfirm
-    });
-
-  }
-
-  _confirmDelete(e) {
-    e.preventDefault();
-    this.props.onDelete();
-  }
-}
+// class CommentRemoveConfirmation extends React.Component {
+//   constructor() {
+//     super();
+//
+//     this.state = {
+//       showConfirm: false
+//     };
+//   }
+//
+//   render() {
+//
+//     let confirmNode;
+//
+//     if (this.state.showConfirm) {
+//       return (
+//         <span>
+//           <a href="" onClick={this._confirmDelete.bind(this)}>Yes </a> - or - <a href="" onClick={this._toggleConfirmMessage.bind(this)}> No</a>
+//         </span>
+//       );
+//     } else {
+//       confirmNode = <a href="" onClick={this._toggleConfirmMessage.bind(this)}>Delete comment?</a>;
+//     }
+//
+//     return (
+//       <span>
+//         {confirmNode}
+//       </span>
+//     );
+//   }
+//
+//   _toggleConfirmMessage(e) {
+//     e.preventDefault();
+//
+//     this.setState({
+//       showConfirm: !this.state.showConfirm
+//     });
+//
+//   }
+//
+//   _confirmDelete(e) {
+//     e.preventDefault();
+//     this.props.onDelete();
+//   }
+// }
